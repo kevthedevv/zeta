@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "dotenv-defaults": "^5.0.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.23.1"
+  }
+}

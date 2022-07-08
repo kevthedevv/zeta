@@ -10,8 +10,8 @@ class SearchAction {
         await searchPage.search(page);
     }
 
-    async send( page ) {
-        await searchPage.send(page);
+    async clickFirstResult(page) {
+        await searchPage.clickFirstResult(page);
     }
 }
 

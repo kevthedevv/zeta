@@ -16,9 +16,10 @@ test.describe('Automating Search engine ', () => {
       await searchAction.search(page)
     });  
 
-    test('And the user will search for a keyword', async () => {
-      await searchAction.search(page)
+    test('Then system will check ', async () => {
+      await searchAction.clickFirstResult(page)
     });  
+
 
 
 });

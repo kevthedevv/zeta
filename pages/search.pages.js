@@ -1,26 +1,39 @@
 const commonElement = require ( '../elements/common.elements' );
-
+const { expect } = require('@playwright/test');
+const engines = {
+    google: "https://www.google.com",
+    bing: "https://www.bing.com"
+}
 class SearchPage {
 
-    delay(time) {
-        return new Promise(function(resolve) { 
-            setTimeout(resolve, time)
-        });
-     }
     async goToPage(page) {
-        await page.goto('https://www.google.com')
+        await page.goto('/')
     }
 
     async search( page ) {
-        const element = commonElement.googleSearch()
-        await page.fill(element, "zeta")
-    }
-    
-    async send( page ) {
-        const element = commonElement.googleSend()
-        await page.locator(element).click();
+        if(process.env.BASE_URL == engines.google){
+            await page.fill(commonElement.googleSearch(), process.env.KEYWORD)
+            await page.locator(commonElement.googleSend()).first().click();
+        }
+        else{
+            await page.fill(commonElement.bingSearch(), process.env.KEYWORD)
+            await page.locator(commonElement.bingSend()).click();
+        }
     }
 
+    async clickFirstResult( page ) {
+        if(process.env.BASE_URL == engines.google){
+            const element = commonElement.googleClickFirstResult()
+            await expect(page.locator(element)).toContainText(process.env.KEYWORD, {ignoreCase: true})
+        }
+        else{
+            const element = commonElement.bingClickFirstResult()
+            await expect(page.locator(element)).toContainText(process.env.KEYWORD, {ignoreCase: true})
+        }
+        
+        await page.screenshot({ path: 'screenshot.png' });
+
+    }
 
 }
 
